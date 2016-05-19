@@ -36,6 +36,8 @@ public class LeaderBoardActivity extends HomeActivity
     }
 
     private ArrayList<ItemData> GetSearchResults(List<UserScoreData> userScoreList){
+
+        this.filterOut(userScoreList);
         ArrayList<ItemData> results = new ArrayList<ItemData>();
 
         ItemData item_details = new ItemData();
@@ -60,5 +62,11 @@ public class LeaderBoardActivity extends HomeActivity
 
 
         return results;
+    }
+
+    private void filterOut (List<UserScoreData> userScoreList){
+        //TODO : Remove duplicate userID
+        //TODO : Add them to Score
+
     }
 }

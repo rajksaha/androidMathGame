@@ -59,7 +59,7 @@ public class HomeActivity extends MainActivity {
         leaderBoard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, MathTypeActivity.class);
+                Intent intent = new Intent(HomeActivity.this, LeaderBoardActivity.class);
                 startActivity(intent);
             }
         });
@@ -76,6 +76,7 @@ public class HomeActivity extends MainActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }

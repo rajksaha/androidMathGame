@@ -3,27 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        app:showAsAction="never"
-        android:title="Sett"/>
+        android:id="@+id/play"
+        android:title="Play"
+        app:showAsAction="never"/>
 
-    <item
-        android:id="@+id/action_up"
-        android:orderInCategory="100"
-        app:showAsAction="never"
-        android:icon="@android:drawable/arrow_up_float"
-        android:title="Up"/>
-    <item
-        android:id="@+id/action_down"
-        android:orderInCategory="100"
-        app:showAsAction="never"
-        android:icon="@android:drawable/arrow_down_float"
-        android:title="Down"/>
-    <item
-        android:id="@+id/action_other"
-        android:orderInCategory="100"
-        app:showAsAction="never"
-        android:title="Other"/>
+    <item android:id="@+id/pointTable"
+        android:title="Point Table"
+        app:showAsAction="never"/>
+
+
+
 
 </menu>
