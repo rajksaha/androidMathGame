@@ -25,6 +25,7 @@
         <activity android:name=".activities.MathTypeActivity"  android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".activities.GameLevelActivity"  android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".activities.LeaderBoardActivity"  android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activities.HelpActivity"  android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

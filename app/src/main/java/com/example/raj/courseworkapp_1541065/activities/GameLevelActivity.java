@@ -8,10 +8,12 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.raj.courseworkapp_1541065.DBHandler;
 import com.example.raj.courseworkapp_1541065.ItemData;
 import com.example.raj.courseworkapp_1541065.ItemListBaseAdapter;
 import com.example.raj.courseworkapp_1541065.R;
 import com.example.raj.courseworkapp_1541065.data.UserData;
+import com.example.raj.courseworkapp_1541065.data.UserScoreData;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -19,7 +21,7 @@ import java.util.ArrayList;
 /**
  * Created by raj on 5/16/2016.
  */
-public class GameLevelActivity extends AppCompatActivity {
+public class GameLevelActivity extends HomeActivity {
 
     Integer mathType;
     private UserData userData;
@@ -32,6 +34,9 @@ public class GameLevelActivity extends AppCompatActivity {
 
         Intent iin= getIntent();
         Bundle b = iin.getExtras();
+
+        context = getApplicationContext();
+        db = new DBHandler(context);
 
         if(b!=null)
         {
@@ -46,7 +51,7 @@ public class GameLevelActivity extends AppCompatActivity {
 
         ArrayList<ItemData> item_details = GetSearchResults();
         final ListView lv1 = (ListView) findViewById(R.id.list_level);
-        lv1.setAdapter(new ItemListBaseAdapter(this, item_details));
+        lv1.setAdapter(new ItemListBaseAdapter(this, item_details,false));
 
         lv1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -72,12 +77,17 @@ public class GameLevelActivity extends AppCompatActivity {
         item_details.setLevelNo(1);
         results.add(item_details);
 
-        item_details = new ItemData();
-        item_details.setLevelName("Level 2");
-        item_details.setLevelNo(2);
-        results.add(item_details);
+        UserScoreData userScoreData = db.getUserScore(userData.getUserID(),2,1);
 
-        item_details = new ItemData();
+        if(userScoreData.getUserID() != null){
+            item_details = new ItemData();
+            item_details.setLevelName("Level 2");
+            item_details.setLevelNo(2);
+            results.add(item_details);
+        }
+
+
+        /*item_details = new ItemData();
         item_details.setLevelName("Level 3");
         item_details.setLevelNo(3);
         results.add(item_details);
@@ -90,7 +100,7 @@ public class GameLevelActivity extends AppCompatActivity {
         item_details = new ItemData();
         item_details.setLevelName("Level 5");
         item_details.setLevelNo(5);
-        results.add(item_details);
+        results.add(item_details);*/
 
         return results;
     }

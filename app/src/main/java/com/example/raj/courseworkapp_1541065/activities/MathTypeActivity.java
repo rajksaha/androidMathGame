@@ -9,10 +9,12 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.raj.courseworkapp_1541065.DBHandler;
 import com.example.raj.courseworkapp_1541065.ItemData;
 import com.example.raj.courseworkapp_1541065.ItemListBaseAdapter;
 import com.example.raj.courseworkapp_1541065.R;
 import com.example.raj.courseworkapp_1541065.data.UserData;
+import com.example.raj.courseworkapp_1541065.data.UserScoreData;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -20,16 +22,21 @@ import java.util.ArrayList;
 /**
  * Created by raj on 5/16/2016.
  */
-public class MathTypeActivity extends AppCompatActivity {
+public class MathTypeActivity extends HomeActivity {
 
     private TextView name;
     private UserData userData;
     private String jsonString;
 
+    DBHandler db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_math_type);
+
+        context = getApplicationContext();
+        db = new DBHandler(context);
 
         Intent iin= getIntent();
         Bundle b = iin.getExtras();
@@ -46,7 +53,7 @@ public class MathTypeActivity extends AppCompatActivity {
 
         ArrayList<ItemData> item_details = GetSearchResults();
         final ListView lv1 = (ListView) findViewById(R.id.list_math_type);
-        lv1.setAdapter(new ItemListBaseAdapter(this, item_details));
+        lv1.setAdapter(new ItemListBaseAdapter(this, item_details,false));
 
 
         lv1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -72,20 +79,35 @@ public class MathTypeActivity extends AppCompatActivity {
         item_details.setLevelNo(1);
         results.add(item_details);
 
-        item_details = new ItemData();
-        item_details.setLevelName("Subtraction");
-        item_details.setLevelNo(2);
-        results.add(item_details);
+        UserScoreData userScoreData = db.getUserScore(userData.getUserID(),2,1);
 
-        item_details = new ItemData();
-        item_details.setLevelName("Multiply");
-        item_details.setLevelNo(3);
-        results.add(item_details);
+        if(userScoreData != null){
+            item_details = new ItemData();
+            item_details.setLevelName("Subtraction");
+            item_details.setLevelNo(2);
+            results.add(item_details);
+        }
 
-        item_details = new ItemData();
-        item_details.setLevelName("Divide");
-        item_details.setLevelNo(4);
-        results.add(item_details);
+        userScoreData = db.getUserScore(userData.getUserID(),3,1);
+
+        if(userScoreData != null){
+
+            item_details = new ItemData();
+            item_details.setLevelName("Multiply");
+            item_details.setLevelNo(3);
+            results.add(item_details);
+        }
+
+
+        userScoreData = db.getUserScore(userData.getUserID(),4,1);
+
+        if(userScoreData != null){
+            item_details = new ItemData();
+            item_details.setLevelName("Divide");
+            item_details.setLevelNo(4);
+            results.add(item_details);
+
+        }
 
 
         return results;

@@ -19,11 +19,13 @@ public class ItemListBaseAdapter extends BaseAdapter {
     private static ArrayList<ItemData> itemDetailsrrayList;
 
 
+    private Boolean data;
 
     private LayoutInflater l_Inflater;
 
-    public ItemListBaseAdapter(Context context, ArrayList<ItemData> results) {
+    public ItemListBaseAdapter(Context context, ArrayList<ItemData> results, Boolean score) {
         itemDetailsrrayList = results;
+        data = score;
         l_Inflater = LayoutInflater.from(context);
     }
 
@@ -45,7 +47,10 @@ public class ItemListBaseAdapter extends BaseAdapter {
             convertView = l_Inflater.inflate(R.layout.level_list, null);
             holder = new ViewHolder();
             holder.txt_itemName = (TextView) convertView.findViewById(R.id.levelName);
-            //holder.txt_itemNo.setVisibility(View.INVISIBLE);
+            holder.txt_itemNo = (TextView) convertView.findViewById(R.id.totalScore);
+            if(!data){
+                holder.txt_itemNo.setVisibility(View.INVISIBLE);
+            }
 
             convertView.setTag(holder);
         } else {
@@ -53,7 +58,7 @@ public class ItemListBaseAdapter extends BaseAdapter {
         }
 
         holder.txt_itemName.setText(itemDetailsrrayList.get(position).getLevelName());
-        //holder.txt_itemNo.setText(String.valueOf(itemDetailsrrayList.get(position).getLevelNo()));
+        holder.txt_itemNo.setText(String.valueOf(itemDetailsrrayList.get(position).getLevelNo()));
 
         return convertView;
     }

@@ -16,9 +16,6 @@ import com.google.gson.Gson;
  */
 public class HomeActivity extends MainActivity {
 
-    private Button play;
-    private Button leaderBoard;
-    private Button help;
     private TextView name;
     private UserData userData;
     private String jsonString;
@@ -39,39 +36,13 @@ public class HomeActivity extends MainActivity {
             Gson gson = new Gson();
             jsonString  =(String) b.get("userData");
             userData = gson.fromJson(jsonString, UserData.class);
-            play = (Button) findViewById(R.id.playButton);
-            leaderBoard = (Button) findViewById(R.id.leaderBoard);
-            //help = (Button) findViewById(R.id.playButton);
             name = (TextView) findViewById(R.id.userName);
 
             name.setText(userData.getName().toString());
         }
 
 
-        play.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, MathTypeActivity.class);
-                intent.putExtra("userData", jsonString);
-                startActivity(intent);
-            }
-        });
 
-        leaderBoard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, LeaderBoardActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        help.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, MathTypeActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     @Override
@@ -84,10 +55,23 @@ public class HomeActivity extends MainActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
 
+        Intent intent;
         switch (item.getItemId()) {
             case R.id.play:
 
-                Intent intent = new Intent(HomeActivity.this, MathGameActivity.class);
+                intent = new Intent(HomeActivity.this, MathTypeActivity.class);
+                intent.putExtra("userData", jsonString);
+                startActivity(intent);
+                return true;
+            case R.id.leaderBoard:
+
+                intent = new Intent(HomeActivity.this, LeaderBoardActivity.class);
+                intent.putExtra("userData", jsonString);
+                startActivity(intent);
+                return true;
+            case R.id.help:
+
+                intent = new Intent(HomeActivity.this, HelpActivity.class);
                 intent.putExtra("userData", jsonString);
                 startActivity(intent);
                 return true;

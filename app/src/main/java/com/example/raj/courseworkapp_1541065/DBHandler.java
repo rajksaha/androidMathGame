@@ -100,6 +100,46 @@ public class DBHandler extends SQLiteOpenHelper {
         db.update(USER_SCORE_TABLE_NAME, contentValue, where, null);
     }
 
+    public List<UserData> getAllUser(){
+
+        List<UserData>  userList = new ArrayList<UserData>();
+        String sql = "SELECT * FROM " + USER_TABLE_NAME;
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = db.rawQuery(sql, null);
+
+
+        if (cursor.moveToFirst()) {
+
+            do {
+                UserData userData = new UserData();
+                userData.setUserID(Integer.parseInt(cursor.getString(0)));
+                userData.setName(cursor.getString(1));
+                userData.setUsername(cursor.getString(2));
+                userData.setPassword(cursor.getString(3));
+                userList.add(userData);
+            } while (cursor.moveToNext());
+        }
+
+        return userList;
+    }
+
+    public ItemData getUserScore(Integer userID){
+        ItemData data = new ItemData();
+
+        UserScoreData userScoreData = new UserScoreData();
+        String sql = "SELECT sum(score) FROM " + USER_SCORE_TABLE_NAME + " " +
+                " WHERE userID = '" + userID + "'";
+
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = db.rawQuery(sql, null);
+
+        if (cursor.moveToFirst()) {
+            data.setLevelNo(Integer.parseInt(cursor.getString(0)));
+        }
+
+        return data;
+    }
+
     public UserData getUserByUserName(String username, String password) {
         UserData userData = new UserData();
 

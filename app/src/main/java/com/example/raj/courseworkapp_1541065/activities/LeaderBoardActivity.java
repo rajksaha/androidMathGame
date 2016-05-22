@@ -8,6 +8,7 @@ import com.example.raj.courseworkapp_1541065.DBHandler;
 import com.example.raj.courseworkapp_1541065.ItemData;
 import com.example.raj.courseworkapp_1541065.ItemListBaseAdapter;
 import com.example.raj.courseworkapp_1541065.R;
+import com.example.raj.courseworkapp_1541065.data.UserData;
 import com.example.raj.courseworkapp_1541065.data.UserScoreData;
 
 import java.util.ArrayList;
@@ -29,44 +30,29 @@ public class LeaderBoardActivity extends HomeActivity
         context = getApplicationContext();
         db = new DBHandler(context);
 
-        List<UserScoreData> userScoreDataList = db.getAllUserScore();
-        ArrayList<ItemData> item_details = GetSearchResults(userScoreDataList);
+
+        ArrayList<ItemData> item_details = getAllUserData();
         final ListView lv1 = (ListView) findViewById(R.id.list_leader);
-        lv1.setAdapter(new ItemListBaseAdapter(this, item_details));
+        lv1.setAdapter(new ItemListBaseAdapter(this, item_details, true));
     }
 
-    private ArrayList<ItemData> GetSearchResults(List<UserScoreData> userScoreList){
-
-        this.filterOut(userScoreList);
-        ArrayList<ItemData> results = new ArrayList<ItemData>();
-
-        ItemData item_details = new ItemData();
-        item_details.setLevelName("Addition");
-        item_details.setLevelNo(1);
-        results.add(item_details);
-
-        item_details = new ItemData();
-        item_details.setLevelName("Subtraction");
-        item_details.setLevelNo(2);
-        results.add(item_details);
-
-        item_details = new ItemData();
-        item_details.setLevelName("Multiply");
-        item_details.setLevelNo(3);
-        results.add(item_details);
-
-        item_details = new ItemData();
-        item_details.setLevelName("Divide");
-        item_details.setLevelNo(4);
-        results.add(item_details);
 
 
-        return results;
-    }
+    private ArrayList<ItemData> getAllUserData (){
 
-    private void filterOut (List<UserScoreData> userScoreList){
-        //TODO : Remove duplicate userID
-        //TODO : Add them to Score
+        ArrayList<ItemData> itemList = new ArrayList<ItemData>();
+        List<UserData> userList = db.getAllUser();
+        for(UserData user : userList){
+
+            ItemData data = db.getUserScore(user.getUserID());
+            if(data!= null){
+                data.setLevelName(user.getName());
+            }
+            itemList.add(data);
+        }
+
+        return itemList;
+
 
     }
 }

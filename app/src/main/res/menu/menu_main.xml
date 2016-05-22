@@ -7,8 +7,12 @@
         android:title="Play"
         app:showAsAction="never"/>
 
-    <item android:id="@+id/pointTable"
+    <item android:id="@+id/leaderBoard"
         android:title="Point Table"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/help"
+        android:title="Instruction"
         app:showAsAction="never"/>
 
 
