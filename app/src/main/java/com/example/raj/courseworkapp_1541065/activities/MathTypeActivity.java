@@ -5,11 +5,15 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.raj.courseworkapp_1541065.ItemData;
 import com.example.raj.courseworkapp_1541065.ItemListBaseAdapter;
 import com.example.raj.courseworkapp_1541065.R;
+import com.example.raj.courseworkapp_1541065.data.UserData;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -18,10 +22,27 @@ import java.util.ArrayList;
  */
 public class MathTypeActivity extends AppCompatActivity {
 
+    private TextView name;
+    private UserData userData;
+    private String jsonString;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_math_type);
+
+        Intent iin= getIntent();
+        Bundle b = iin.getExtras();
+
+        if(b!=null)
+        {
+            Gson gson = new Gson();
+            jsonString  =(String) b.get("userData");
+            userData = gson.fromJson(jsonString, UserData.class);
+            name = (TextView) findViewById(R.id.userName);
+
+            name.setText(userData.getName().toString());
+        }
 
         ArrayList<ItemData> item_details = GetSearchResults();
         final ListView lv1 = (ListView) findViewById(R.id.list_math_type);
@@ -36,6 +57,7 @@ public class MathTypeActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(MathTypeActivity.this, GameLevelActivity.class);
                 intent.putExtra("mathType", obj_itemDetails.getLevelNo());
+                intent.putExtra("userData", jsonString);
                 startActivity(intent);
 
             }

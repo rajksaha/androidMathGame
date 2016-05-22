@@ -3,6 +3,7 @@ package com.example.raj.courseworkapp_1541065.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,10 +21,10 @@ import com.google.gson.Gson;
 /**
  * Created by raj on 5/14/2016.
  */
-public class MathGameActivity extends HomeActivity {
+public class MathGameActivity extends MainActivity {
 
 
-    Integer questionAsked = 1;
+    Integer questionAsked = 0;
 
     TextView question;
     Button option1;
@@ -36,10 +37,12 @@ public class MathGameActivity extends HomeActivity {
 
     private UserData userData;
     private String jsonString;
+    private TextView name;
 
     Integer perLevelScore = 0;
 
     DBHandler db;
+    Button next;
 
 
     Integer level = 1;
@@ -65,6 +68,9 @@ public class MathGameActivity extends HomeActivity {
             level =(Integer) b.get("levelNum");
             jsonString  =(String) b.get("userData");
             userData = gson.fromJson(jsonString, UserData.class);
+            name = (TextView) findViewById(R.id.userName);
+
+            name.setText(userData.getName().toString());
         }
 
         question = (TextView) findViewById(R.id.question);
@@ -75,9 +81,11 @@ public class MathGameActivity extends HomeActivity {
         imageView = (ImageView) findViewById(R.id.imageView);
         correct = (ImageView) findViewById(R.id.correct);
         wrong = (ImageView) findViewById(R.id.wrong);
+        next = (Button) findViewById(R.id.next);
 
 
 
+        next.setVisibility(View.INVISIBLE);
         correct.setVisibility(View.INVISIBLE);
         wrong.setVisibility(View.INVISIBLE);
         myHandler = new Handler();
@@ -87,6 +95,24 @@ public class MathGameActivity extends HomeActivity {
 
         this.askQuestion(level,mathType,questionAsked);
 
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                next.setVisibility(View.INVISIBLE);
+
+                if(level == 2 && mathType == 4){
+                    Intent intent = new Intent(MathGameActivity.this, HomeActivity.class);
+                    intent.putExtra("userData", jsonString);
+                    startActivity(intent);
+                }
+                if(level == 2){
+                    mathType +=1;
+                    level = 0;
+                }
+                level +=1;
+                askQuestion(level, mathType, 0);
+            }
+        });
 
         option1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,18 +143,20 @@ public class MathGameActivity extends HomeActivity {
     private void askQuestion(Integer level, Integer mathType, Integer questionAsked){
 
         QuestionMaker questionMaker = new QuestionMaker();
-        if(questionAsked % 5 == 0){
+        if(questionAsked != 0 && questionAsked % 5 == 0){
             this.saveLevelScore();
-            this.level += level;
-            level = this.level;
-        }
-        mathGameData = questionMaker.makeQuestion(level,mathType);
+            /*this.level += level;
+            level = this.level;*/
+        }else{
+            mathGameData = questionMaker.makeQuestion(level,mathType);
 
-        question.setText(mathGameData.getDisplayString());
-        option1.setText(mathGameData.getOption1().toString());
-        option2.setText(mathGameData.getOption2().toString());
-        option3.setText(mathGameData.getOption3().toString());
-        option4.setText(mathGameData.getOption4().toString());
+            question.setText(mathGameData.getDisplayString());
+            option1.setText(mathGameData.getOption1().toString());
+            option2.setText(mathGameData.getOption2().toString());
+            option3.setText(mathGameData.getOption3().toString());
+            option4.setText(mathGameData.getOption4().toString());
+        }
+
     }
 
     private void saveLevelScore() {
@@ -137,10 +165,13 @@ public class MathGameActivity extends HomeActivity {
 
             UserScoreData dBUserScoreData = db.getUserScore(userData.getUserID(),mathType,level);
 
-            if(dBUserScoreData != null){
+            Integer score = perLevelScore;
+            if(dBUserScoreData != null && dBUserScoreData.getScore() != null){
                 if(dBUserScoreData.getScore() < perLevelScore){
                     dBUserScoreData.setScore(perLevelScore);
                     db.updateUserScore(dBUserScoreData);
+                }else{
+                    score = dBUserScoreData.getScore();
                 }
             }else{
                 UserScoreData userScoreData = new UserScoreData();
@@ -151,6 +182,11 @@ public class MathGameActivity extends HomeActivity {
                 db.addUserScore(userScoreData);
             }
 
+
+            correct.setVisibility(View.INVISIBLE);
+            wrong.setVisibility(View.INVISIBLE);
+            question.setText("Your Highest Score " + score);
+            next.setVisibility(View.VISIBLE);
 
             perLevelScore = 0;
         }catch (Exception e){

@@ -45,8 +45,7 @@ public class ItemListBaseAdapter extends BaseAdapter {
             convertView = l_Inflater.inflate(R.layout.level_list, null);
             holder = new ViewHolder();
             holder.txt_itemName = (TextView) convertView.findViewById(R.id.levelName);
-            holder.txt_itemNo = (TextView) convertView.findViewById(R.id.itemNum);
-            holder.txt_itemNo.setVisibility(View.INVISIBLE);
+            //holder.txt_itemNo.setVisibility(View.INVISIBLE);
 
             convertView.setTag(holder);
         } else {
@@ -54,7 +53,7 @@ public class ItemListBaseAdapter extends BaseAdapter {
         }
 
         holder.txt_itemName.setText(itemDetailsrrayList.get(position).getLevelName());
-        holder.txt_itemNo.setText(String.valueOf(itemDetailsrrayList.get(position).getLevelNo()));
+        //holder.txt_itemNo.setText(String.valueOf(itemDetailsrrayList.get(position).getLevelNo()));
 
         return convertView;
     }

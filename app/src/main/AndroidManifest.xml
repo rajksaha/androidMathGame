@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activities.HomeActivity"  android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activities.HomeActivity"   />
         <activity android:name=".activities.RegisterActivity"  android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".activities.MathGameActivity"  android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".activities.MathTypeActivity"  android:theme="@style/AppTheme.NoActionBar"/>

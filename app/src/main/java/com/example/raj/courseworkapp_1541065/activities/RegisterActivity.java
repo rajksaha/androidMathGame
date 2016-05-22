@@ -32,7 +32,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         context = RegisterActivity.this;
-        name = (TextView) findViewById(R.id.name);
+        name = (TextView) findViewById(R.id.userName);
         username = (TextView) findViewById(R.id.userName);
         password = (TextView) findViewById(R.id.password);
 
