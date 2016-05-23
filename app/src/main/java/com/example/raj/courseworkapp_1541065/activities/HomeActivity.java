@@ -1,6 +1,7 @@
 package com.example.raj.courseworkapp_1541065.activities;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,6 +28,10 @@ public class HomeActivity extends MainActivity {
         /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);*/
 
+        welcome = (TextView)findViewById(R.id.welcomeTextView) ;
+
+        Typeface customText = Typeface.createFromAsset(getAssets(), "folia_mix.ttf");
+        welcome.setTypeface(customText);
 
         Intent iin= getIntent();
         Bundle b = iin.getExtras();
@@ -39,6 +44,7 @@ public class HomeActivity extends MainActivity {
             name = (TextView) findViewById(R.id.userName);
 
             name.setText(userData.getName().toString());
+            name.setTypeface(customText);
         }
 
 

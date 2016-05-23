@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/background">
 
     <TextView
         android:id="@+id/nameT"
@@ -17,7 +18,7 @@
         android:text="Name :" />
 
     <EditText
-        android:id="@+id/userName"
+        android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/nameT"
@@ -41,8 +42,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/textView5"
-        android:layout_alignEnd="@+id/userName"
-        android:layout_alignRight="@+id/userName"
+        android:layout_alignEnd="@+id/name"
+        android:layout_alignRight="@+id/name"
         android:layout_toRightOf="@+id/textView5"
         android:ems="10"
         android:inputType="textPersonName" />
@@ -75,6 +76,7 @@
         android:layout_below="@+id/password"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="63dp"
-        android:text="Register" />
+        android:text="Register"
+        android:background="@drawable/button_style"/>
 
 </RelativeLayout>
